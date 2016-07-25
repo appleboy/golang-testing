@@ -5,6 +5,9 @@ all:
 install:
 	glide install
 
+update:
+	glide update
+
 build:
 	docker build --no-cache -t appleboy/golang-testing .
 
