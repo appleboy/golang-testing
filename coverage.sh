@@ -39,6 +39,8 @@ Generate test coverage statistics for Go packages.
   vet                            Generate Vet report for all packages
   cloc                           Generate Count Lines of Code report for all files
 
+Contribute and source at https://github.com/appleboy/golang-testing
+
 EOF
 }
 
