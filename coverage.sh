@@ -16,6 +16,7 @@ output() {
 }
 
 workdir=".cover"
+cover_mode="set"
 coverage_report="$workdir/coverage.txt"
 coverage_xml_report="$workdir/coverage.xml"
 junit_report="$workdir/junit.txt"
@@ -38,6 +39,7 @@ Generate test coverage statistics for Go packages.
   lint                           Generate Lint report for all packages
   vet                            Generate Vet report for all packages
   cloc                           Generate Count Lines of Code report for all files
+  all                            Execute coverage、junit、lint、vet and cloc report
 
 Contribute and source at https://github.com/appleboy/golang-testing
 
@@ -108,9 +110,8 @@ case "$1" in
   tool)
     install_dependency_tool ;;
   testing)
-    mode="set"
-    test -z $2 || mode=$2
-    testing $mode ;;
+    test -z $2 || cover_mode=$2
+    testing $cover_mode ;;
   coverage)
     generate_cover_report ;;
   junit)
@@ -121,6 +122,14 @@ case "$1" in
     generate_vet_report ;;
   cloc)
     generate_cloc_report ;;
+  all)
+    testing $cover_mode
+    generate_cover_report
+    generate_junit_report
+    generate_lint_report
+    generate_vet_report
+    generate_cloc_report
+    ;;
   *)
     show_help ;;
 esac

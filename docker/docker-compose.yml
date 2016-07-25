@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  golang-build:
+    build: ./golang
+    privileged: true
+    volumes:
+      - ../:/go/src/github.com/appleboy/golang-testing
+    command: glide install && coverage all
