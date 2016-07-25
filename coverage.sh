@@ -47,10 +47,12 @@ EOF
 }
 
 install_dependency_tool() {
-  which go-junit-report || go get -u github.com/jstemmer/go-junit-report
-  which gocov || go get -u github.com/axw/gocov/gocov
-  which gocov-xml || go get -u github.com/AlekSi/gocov-xml
-  which golint || go get -u github.com/golang/lint/golint
+  go get -u github.com/jstemmer/go-junit-report
+  go get -u github.com/axw/gocov/gocov
+  go get -u github.com/AlekSi/gocov-xml
+  go get -u github.com/golang/lint/golint
+  curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc
+  chmod 755 /usr/bin/cloc
 }
 
 testing() {
@@ -91,16 +93,6 @@ generate_vet_report() {
 }
 
 generate_cloc_report() {
-  case "$OSTYPE" in
-    darwin*)
-      which cloc || brew install cloc ;;
-    linux*)
-      which cloc || apt-get install cloc ;;
-    *)
-      curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc
-      chmod 755 /usr/bin/cloc
-  esac
-
   cloc --by-file --xml --out=${cloc_report} --exclude-dir=vendor,Godeps,.cover .
 }
 
