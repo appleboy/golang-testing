@@ -4,6 +4,8 @@
 
 **Docker image includes golang coverage tools for testing.**
 
+[![Build Status](https://travis-ci.org/appleboy/golang-testing.svg?branch=master)](https://travis-ci.org/appleboy/golang-testing) [![codecov](https://codecov.io/gh/appleboy/golang-testing/branch/master/graph/badge.svg)](https://codecov.io/gh/appleboy/golang-testing) [![Go Report Card](https://goreportcard.com/badge/github.com/appleboy/golang-testing)](https://goreportcard.com/report/github.com/appleboy/golang-testing)
+
 ## Feature
 
 The docker images includes the following `golang` tools.
