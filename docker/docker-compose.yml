@@ -6,4 +6,4 @@ services:
     privileged: true
     volumes:
       - ../:/go/src/github.com/appleboy/golang-testing
-    command: glide install && coverage all
+    command: sh -c "glide install && coverage all"
