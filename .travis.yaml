@@ -21,4 +21,7 @@ install:
   - glide install
 
 script:
-  - go test -v .
+  - go test -cover -coverprofile=coverage.txt -v .
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
