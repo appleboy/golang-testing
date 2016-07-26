@@ -20,3 +20,4 @@ test: clean
 
 clean:
 	-rm -rf .cover
+	-docker-compose -f docker/docker-compose.yml down
