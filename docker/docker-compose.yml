@@ -1,9 +1,14 @@
 version: "2"
 
 services:
-  golang-build:
-    build: ./golang
+  golang-testing:
+    build:
+      context: ./golang
+      args:
+        PROJECT_PATH: $PROJECT_PATH
     privileged: true
+    environment:
+      - PROJECT_PATH
     volumes:
-      - ../:/go/src/github.com/appleboy/golang-testing
+      - ../:$PROJECT_PATH
     command: sh -c "glide up && coverage all"
