@@ -82,6 +82,22 @@ Generate test coverage statistics for Go packages.
 Contribute and source at https://github.com/appleboy/golang-testing
 ```
 
+## Demo
+
+```
+$ git clone https://github.com/appleboy/golang-testing.git
+$ cd golang-testing
+$ export PROJECT_PATH=/go/src/github.com/appleboy/golang-testing
+$ docker run --rm \
+    -v $(PWD):$(PROJECT_PATH) \
+    -w=$(PROJECT_PATH) \
+    appleboy/golang-testing \
+    sh -c "make update && coverage all"
+# or docker-compose command
+$ docker-compose -f docker/docker-compose.yml \
+    run golang-testing
+```
+
 ## Screenshot
 
 ![Testing](./screenshot/screen.png)
