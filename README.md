@@ -37,3 +37,34 @@ $ docker run --rm \
 ```
 
 Change `PROJECT_PATH` variable. Replace `github.com/appleboy/golang-testing` with your github path.
+
+## Install Coverage tool
+
+Copy `coverage.sh` to `/usr/local/bin/coverage` and change permission.
+
+```
+$ curl -fsSL https://raw.githubusercontent.com/appleboy/golang-testing/master/coverage.sh /usr/local/bin/coverage
+$ chmod +x /usr/local/bin/coverage
+```
+
+coverage tool document:
+
+```
+Generate test coverage statistics for Go packages.
+
+  -- Command Flag --
+  -h | --help                    Display this help and exit
+  -m | --mode                    Set coverage mode. (set|count|atomic)
+
+  -- Command Action --
+  tool                           Install go dependency tools like gocov or golint.
+  testing                        Run go testing for all packages
+  coverage                       Generate coverage report for all packages
+  junit                          Generate coverage xml report for junit plugin
+  lint                           Generate Lint report for all packages
+  vet                            Generate Vet report for all packages
+  cloc                           Generate Count Lines of Code report for all files
+  all                            Execute coverage、junit、lint、vet and cloc report
+
+Contribute and source at https://github.com/appleboy/golang-testing
+```
