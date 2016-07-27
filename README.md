@@ -25,6 +25,8 @@ Pull the latest `golang-testing` docker image.
 $ docker pull appleboy/golang-testing
 ```
 
+### run docker command
+
 Run testing in single docker command.
 
 ```
@@ -37,6 +39,15 @@ $ docker run --rm \
 ```
 
 Change `PROJECT_PATH` variable. Replace `github.com/appleboy/golang-testing` with your github path.
+
+### run docker-compose command
+
+Please see [docker/docker-compose.yml](./docker/docker-compose.yml) example file. Run the following command.
+
+```
+$ export PROJECT_PATH=/go/src/github.com/appleboy/golang-testing
+$ docker-compose -f docker/docker-compose.yml run golang-testing
+```
 
 ## Install Coverage tool
 

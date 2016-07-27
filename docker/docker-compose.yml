@@ -11,4 +11,4 @@ services:
       - PROJECT_PATH
     volumes:
       - ../:$PROJECT_PATH
-    command: sh -c "glide up && coverage all"
+    command: sh -c "make update && coverage all"
