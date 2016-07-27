@@ -1,6 +1,6 @@
 # golang-testing
 
-<a title="Go-brown-side.sh" href="https://www.flickr.com/photos/appleboy/24407557644/in/dateposted-public/" data-flickr-embed="true"><img src="https://farm2.staticflickr.com/1622/24407557644_36087ca6de.jpg" alt="Go-brown-side.sh" width="500" height="500" /></a>
+![Golang Testing](https://farm2.staticflickr.com/1622/24407557644_36087ca6de.jpg)
 
 **Docker image includes golang coverage tools for testing.**
 
@@ -16,3 +16,24 @@ The docker images includes the following `golang` tools.
 * [x] [golint](https://github.com/golang/lint/golint) This is a linter for Go source code.
 * [x] [glide](https://github.com/Masterminds/glide) Package Management for Golang
 * [x] [cloc](https://github.com/AlDanial/cloc) Count Lines of Code.
+
+## Usage
+
+Pull the latest `golang-testing` docker image.
+
+```
+$ docker pull appleboy/golang-testing
+```
+
+Run testing in single docker command.
+
+```
+$ export PROJECT_PATH=/go/src/github.com/appleboy/golang-testing
+$ docker run --rm \
+    -v $(PWD):$PROJECT_PATH \
+    -w=$PROJECT_PATH \
+    appleboy/golang-testing \
+    sh -c "coverage all"
+```
+
+Change `PROJECT_PATH` variable. Replace `github.com/appleboy/golang-testing` with your github path.

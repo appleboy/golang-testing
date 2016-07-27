@@ -13,10 +13,17 @@ update:
 build:
 	docker build --no-cache -t appleboy/golang-testing .
 
-test: clean
+docker_test: clean
 	docker-compose -f docker/docker-compose.yml config
 	docker-compose -f docker/docker-compose.yml run golang-testing
 	docker-compose -f docker/docker-compose.yml down
+
+test: clean
+	docker run --rm \
+		-v $(PWD):$(PROJECT_PATH) \
+		-w=$(PROJECT_PATH) \
+		appleboy/golang-testing \
+		sh -c "glide up && coverage all"
 
 clean:
 	-rm -rf .cover
