@@ -32,8 +32,13 @@ show_help() {
 cat << EOF
 Generate test coverage statistics for Go packages.
 
+  -- Command Flag --
+  -h | --help                    Display this help and exit
+  -m | --mode                    Set coverage mode. (set|count|atomic)
+
+  -- Command Action --
   tool                           Install go dependency tools like gocov or golint.
-  testing [set|count|atomic]     Run go testing for all packages
+  testing                        Run go testing for all packages
   coverage                       Generate coverage report for all packages
   junit                          Generate coverage xml report for junit plugin
   lint                           Generate Lint report for all packages
@@ -42,8 +47,8 @@ Generate test coverage statistics for Go packages.
   all                            Execute coverage、junit、lint、vet and cloc report
 
 Contribute and source at https://github.com/appleboy/golang-testing
-
 EOF
+exit 0
 }
 
 install_dependency_tool() {
@@ -57,16 +62,15 @@ install_dependency_tool() {
 
 testing() {
   test -f ${junit_report} && rm -f ${junit_report}
-  coverage_mode=$@
-  output "Running ${coverage_mode} mode for coverage."
+  output "Running ${cover_mode} mode for coverage."
   for pkg in $packages; do
     f="$workdir/$(echo $pkg | tr / -).cover"
     output "Testing coverage report for ${pkg}"
-    go test -v -cover -coverprofile=${f} -covermode=${coverage_mode} $pkg | tee -a ${junit_report}
+    go test -v -cover -coverprofile=${f} -covermode=${cover_mode} $pkg | tee -a ${junit_report}
   done
 
   output "Convert all packages coverage report to $coverage_report"
-  echo "mode: $coverage_mode" > "$coverage_report"
+  echo "mode: $cover_mode" > "$coverage_report"
   grep -h -v "^mode:" "$workdir"/*.cover >> "$coverage_report"
 }
 
@@ -96,32 +100,59 @@ generate_cloc_report() {
   cloc --by-file --xml --out=${cloc_report} --exclude-dir=vendor,Godeps,.cover .
 }
 
-case "$1" in
-  "")
-    show_help ;;
-  tool)
-    install_dependency_tool ;;
-  testing)
-    test -z $2 || cover_mode=$2
-    testing $cover_mode ;;
-  coverage)
-    generate_cover_report ;;
-  junit)
-    generate_junit_report ;;
-  lint)
-    generate_lint_report ;;
-  vet)
-    generate_vet_report ;;
-  cloc)
-    generate_cloc_report ;;
-  all)
-    testing $cover_mode
-    generate_cover_report
-    generate_junit_report
-    generate_lint_report
-    generate_vet_report
-    generate_cloc_report
+# Process command line...
+
+[ $# -gt 0 ] || show_help
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    --help | -h)
+      show_help
     ;;
-  *)
-    show_help ;;
-esac
+    --mode | -m)
+      shift
+      cover_mode=$1
+      test -z $cover_mode && show_help
+      shift
+      ;;
+    tool)
+      install_dependency_tool
+      shift
+      ;;
+    testing)
+      testing
+      shift
+      ;;
+    coverage)
+      generate_cover_report
+      shift
+      ;;
+    junit)
+      generate_junit_report
+      shift
+      ;;
+    lint)
+      generate_lint_report
+      shift
+      ;;
+    vet)
+      generate_vet_report
+      shift
+      ;;
+    cloc)
+      generate_cloc_report
+      shift
+      ;;
+    all)
+      testing
+      generate_cover_report
+      generate_junit_report
+      generate_lint_report
+      generate_vet_report
+      generate_cloc_report
+      shift
+      ;;
+    *)
+      show_help ;;
+  esac
+done

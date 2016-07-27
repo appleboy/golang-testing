@@ -23,7 +23,7 @@ test: clean
 		-v $(PWD):$(PROJECT_PATH) \
 		-w=$(PROJECT_PATH) \
 		appleboy/golang-testing \
-		sh -c "glide up && coverage all"
+		sh -c "make update && coverage all"
 
 clean:
 	-rm -rf .cover
