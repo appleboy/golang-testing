@@ -55,6 +55,7 @@ Generate test coverage statistics for Go packages.
   -- Command Flag --
   -h | --help                    Display this help and exit
   -m | --mode                    Set coverage mode. (set|count|atomic)
+  -d | --dir                     Set store coverage folder (default is ".cover")
 
   -- Command Action --
   tool                           Install go dependency tools like gocov or golint.

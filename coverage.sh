@@ -17,16 +17,7 @@ output() {
 
 workdir=".cover"
 cover_mode="set"
-coverage_report="$workdir/coverage.txt"
-coverage_xml_report="$workdir/coverage.xml"
-junit_report="$workdir/junit.txt"
-junit_xml_report="$workdir/report.xml"
-lint_report="$workdir/lint.txt"
-vet_report="$workdir/vet.txt"
-cloc_report="$workdir/cloc.xml"
 packages=$(go list ./... | grep -v vendor)
-
-test -d $workdir || mkdir -p $workdir
 
 show_help() {
 cat << EOF
@@ -35,6 +26,7 @@ Generate test coverage statistics for Go packages.
   -- Command Flag --
   -h | --help                    Display this help and exit
   -m | --mode                    Set coverage mode. (set|count|atomic)
+  -d | --dir                     Set store coverage folder (default is ".cover")
 
   -- Command Action --
   tool                           Install go dependency tools like gocov or golint.
@@ -49,6 +41,19 @@ Generate test coverage statistics for Go packages.
 Contribute and source at https://github.com/appleboy/golang-testing
 EOF
 exit 0
+}
+
+set_workdir() {
+  test -d $workdir && rm -rf $workdir
+  workdir=$1
+  test -d $workdir || mkdir -p $workdir
+  coverage_report="$workdir/coverage.txt"
+  coverage_xml_report="$workdir/coverage.xml"
+  junit_report="$workdir/junit.txt"
+  junit_xml_report="$workdir/report.xml"
+  lint_report="$workdir/lint.txt"
+  vet_report="$workdir/vet.txt"
+  cloc_report="$workdir/cloc.xml"
 }
 
 install_dependency_tool() {
@@ -100,6 +105,9 @@ generate_cloc_report() {
   cloc --by-file --xml --out=${cloc_report} --exclude-dir=vendor,Godeps,.cover .
 }
 
+# set default folder.
+set_workdir $workdir
+
 # Process command line...
 
 [ $# -gt 0 ] || show_help
@@ -113,6 +121,13 @@ while [ $# -gt 0 ]; do
       shift
       cover_mode=$1
       test -z $cover_mode && show_help
+      shift
+      ;;
+    --dir | -d)
+      shift
+      workdir=$1
+      test -z $workdir && show_help
+      set_workdir $workdir
       shift
       ;;
     tool)
