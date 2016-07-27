@@ -120,15 +120,17 @@ while [ $# -gt 0 ]; do
     --mode | -m)
       shift
       cover_mode=$1
-      test -z $cover_mode && show_help
+      test -z ${cover_mode} && show_help
       shift
+      test -z $1 && show_help
       ;;
     --dir | -d)
       shift
       workdir=$1
-      test -z $workdir && show_help
-      set_workdir $workdir
+      test -z ${workdir} && show_help
+      set_workdir ${workdir}
       shift
+      test -z $1 && show_help
       ;;
     tool)
       install_dependency_tool
