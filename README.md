@@ -46,7 +46,8 @@ Please see [docker/docker-compose.yml](./docker/docker-compose.yml) example file
 
 ```
 $ export PROJECT_PATH=/go/src/github.com/appleboy/golang-testing
-$ docker-compose -f docker/docker-compose.yml run golang-testing
+$ docker-compose -f docker/docker-compose.yml run golang-testing \
+  sh -c "coverage all"
 ```
 
 ## Install Coverage tool
@@ -80,3 +81,7 @@ Generate test coverage statistics for Go packages.
 
 Contribute and source at https://github.com/appleboy/golang-testing
 ```
+
+## Screenshot
+
+![Testing](./screenshot/screen.png)
