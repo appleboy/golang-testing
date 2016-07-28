@@ -17,6 +17,7 @@ output() {
 
 workdir=".cover"
 cover_mode="set"
+kernel_name=$(uname -s)
 packages=$(go list ./... | grep -v vendor)
 
 show_help() {
@@ -95,7 +96,8 @@ generate_lint_report() {
 
   # fix path error
   root_path=${PWD//\//\\/}
-  sed -i"" "s/${root_path}\(\/\)*//g" ${lint_report}
+  [ "$kernel_name" == "Darwin" ] && sed -e "s/${root_path}\(\/\)*//g" -i '' ${lint_report}
+  [ "$kernel_name" == "Linux" ] && sed -e "s/${root_path}\(\/\)*//g" -i ${lint_report}
 }
 
 generate_vet_report() {
