@@ -66,7 +66,7 @@ Generate test coverage statistics for Go packages.
 
   -- Command Flag --
   -h | --help                    Display this help and exit
-  -m | --mode                    Set coverage mode. (set|count|atomic)
+  -m | --mode                    Set coverage mode. default is "set" (set|count|atomic)
   -d | --dir                     Set store coverage folder (default is ".cover")
 
   -- Command Action --
