@@ -92,6 +92,10 @@ generate_lint_report() {
     output "Go Lint report for ${pkg}"
     golint ${pkg} | tee -a ${lint_report}
   done
+
+  # fix path error
+  root_path=${PWD//\//\\/}
+  sed -i"" "s/${root_path}\(\/\)*//g" ${lint_report}
 }
 
 generate_vet_report() {
