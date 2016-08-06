@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Generate test coverage statistics for Go packages.
 #
@@ -6,13 +6,13 @@
 set -e
 
 output() {
-  printf "\033[32m"
+  color="32"
+  if [[ "$2" -gt 0 ]]; then
+    color="31"
+  fi
+  printf "\033[${color}m"
   echo $1
   printf "\033[0m"
-
-  if [ "$2" = 1 ]; then
-    exit 1
-  fi
 }
 
 workdir=".cover"
@@ -66,18 +66,30 @@ install_dependency_tool() {
   chmod 755 /usr/bin/cloc
 }
 
+errorNumber() {
+  if [ "$1" -ne 0 ]; then
+    error=$1
+  fi
+}
+
 testing() {
+  error=0
   test -f ${junit_report} && rm -f ${junit_report}
   output "Running ${cover_mode} mode for coverage."
   for pkg in $packages; do
     f="$workdir/$(echo $pkg | tr / -).cover"
     output "Testing coverage report for ${pkg}"
     go test -v -cover -coverprofile=${f} -covermode=${cover_mode} $pkg | tee -a ${junit_report}
+    # ref: http://stackoverflow.com/questions/1221833/bash-pipe-output-and-capture-exit-status
+    errorNumber ${PIPESTATUS[0]}
   done
 
   output "Convert all packages coverage report to $coverage_report"
   echo "mode: $cover_mode" > "$coverage_report"
   grep -h -v "^mode:" "$workdir"/*.cover >> "$coverage_report"
+  if [ "$error" -ne 0 ]; then
+    output "Get Tesing Error Number Code: ${error}" ${error}
+  fi
 }
 
 generate_cover_report() {
@@ -85,7 +97,7 @@ generate_cover_report() {
 }
 
 generate_junit_report() {
-  cat $junit_report | go-junit-report > ${junit_xml_report}
+  cat ${junit_report} | go-junit-report > ${junit_xml_report}
 }
 
 generate_lint_report() {
@@ -179,3 +191,7 @@ while [ $# -gt 0 ]; do
       show_help ;;
   esac
 done
+
+if [[ "$error" -gt 0 ]]; then
+  exit $error
+fi
