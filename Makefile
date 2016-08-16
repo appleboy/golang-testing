@@ -11,7 +11,9 @@ update:
 	glide update
 
 build:
-	docker build --no-cache -t appleboy/golang-testing .
+	docker build --no-cache -f Dockerfile1.7 -t appleboy/golang-testing .
+	docker build --no-cache -f Dockerfile1.6.3 -t appleboy/golang-testing .
+	docker build --no-cache -f Dockerfile1.5.4 -t appleboy/golang-testing .
 
 docker_test: clean
 	docker-compose -f docker/docker-compose.yml config
