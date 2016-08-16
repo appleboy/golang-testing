@@ -6,13 +6,14 @@ go:
   - 1.5
   - 1.6
   - 1.6.3
+  - 1.7
   - tip
 
 services:
   - docker
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.7.1
+  DOCKER_COMPOSE_VERSION: 1.8.0
 
 before_install:
   - sudo apt-get -y update
@@ -22,6 +23,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - curl https://glide.sh/get | sh
 
 install:
   - export GO15VENDOREXPERIMENT=1
@@ -29,6 +31,8 @@ install:
 
 script:
   - make test
+  - make docker_test
+  - make docker_compose_test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f .cover/coverage.txt
