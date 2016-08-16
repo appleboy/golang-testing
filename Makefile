@@ -27,7 +27,7 @@ docker_test: clean
 		appleboy/golang-testing \
 		sh -c "make update && coverage all"
 
-test: clean install
+test: clean update
 	sudo cp coverage.sh /usr/local/bin/coverage
 	coverage testing
 
