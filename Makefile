@@ -11,9 +11,11 @@ update:
 	glide update
 
 build:
-	docker build --no-cache -f Dockerfile1.7 -t appleboy/golang-testing:1.7 .
-	docker build --no-cache -f Dockerfile1.6.3 -t appleboy/golang-testing:1.6.3 .
-	docker build --no-cache -f Dockerfile1.5.4 -t appleboy/golang-testing:1.5.4 .
+ifeq ($(tag),)
+	@echo "Usage: make $@ tag=<tag>"
+	@exit 1
+endif
+	docker build --no-cache -f Dockerfile$(tag) -t appleboy/golang-testing:$(tag) .
 
 docker_compose_test: clean
 	docker-compose -f docker/docker-compose.yml config
