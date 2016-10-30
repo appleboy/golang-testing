@@ -22,7 +22,7 @@ The docker images includes the following `golang` tools.
 Copy `coverage.sh` to `/usr/local/bin/coverage` and change permission.
 
 ```
-$ curl -fsSL https://raw.githubusercontent.com/appleboy/golang-testing/master/coverage.sh /usr/local/bin/coverage
+$ wget https://raw.githubusercontent.com/appleboy/golang-testing/1.0.0/coverage.sh -O /usr/local/bin/coverage
 $ chmod +x /usr/local/bin/coverage
 ```
 
