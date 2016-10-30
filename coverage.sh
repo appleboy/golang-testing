@@ -44,6 +44,20 @@ EOF
 exit 0
 }
 
+# add this function on your .bashrc file to echoed Go version
+go_version() {
+  if [ "$1" = "" ]; then
+    match=1
+  else
+    match=2
+  fi
+  version=$(go version)
+  regex="go(([0-9].[0-9]).[0-9])"
+  if [[ $version =~ $regex ]]; then
+    echo ${BASH_REMATCH[${match}]}
+  fi
+}
+
 set_workdir() {
   test -d $workdir && rm -rf $workdir
   workdir=$1
@@ -58,11 +72,16 @@ set_workdir() {
 }
 
 install_dependency_tool() {
+  goversion=$(go_version "gloabl")
   [ -d "${GOPATH}/bin" ] || mkdir -p ${GOPATH}/bin
   go get -u github.com/jstemmer/go-junit-report
   go get -u github.com/axw/gocov/gocov
   go get -u github.com/AlekSi/gocov-xml
-  go get -u github.com/golang/lint/golint
+  if [[ "$goversion" < "1.6" ]]; then
+    output "Golint requires Go 1.6 or later."
+  else
+    go get -u github.com/golang/lint/golint
+  fi
   curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o ${GOPATH}/bin/cloc
   chmod 755 ${GOPATH}/bin/cloc
 }
