@@ -13,7 +13,7 @@ The docker images includes the following `golang` tools.
 * [x] [go-junit-report](https://github.com/jstemmer/go-junit-report) Convert go test output to junit xml
 * [x] [gocov](https://github.com/axw/gocov/gocov) Coverage testing tool
 * [x] [gocov-xml](https://github.com/AlekSi/gocov-xml) XML (Cobertura) export
-* [x] [golint](https://github.com/golang/lint/golint) This is a linter for Go source code.
+* [x] [golint](https://github.com/golang/lint/golint) This is a linter for Go source code. (Golint requires Go 1.6 or later.)
 * [x] [glide](https://github.com/Masterminds/glide) Package Management for Golang
 * [x] [cloc](https://github.com/AlDanial/cloc) Count Lines of Code.
 
@@ -22,8 +22,8 @@ The docker images includes the following `golang` tools.
 Copy `coverage.sh` to `/usr/local/bin/coverage` and change permission.
 
 ```
-$ wget https://raw.githubusercontent.com/appleboy/golang-testing/1.0.0/coverage.sh -O ${GOPATH}/bin/coverage
-$ chmod +x ${GOPATH}/bin/coverage
+$ curl https://raw.githubusercontent.com/appleboy/golang-testing/1.0.2/coverage.sh -o $GOPATH/bin/coverage
+$ chmod +x $GOPATH/bin/coverage
 ```
 
 ## Usage
