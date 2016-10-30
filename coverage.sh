@@ -58,12 +58,13 @@ set_workdir() {
 }
 
 install_dependency_tool() {
+  [ -d "${GOPATH}/bin" ] || mkdir -p ${GOPATH}/bin
   go get -u github.com/jstemmer/go-junit-report
   go get -u github.com/axw/gocov/gocov
   go get -u github.com/AlekSi/gocov-xml
   go get -u github.com/golang/lint/golint
-  curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc
-  chmod 755 /usr/bin/cloc
+  curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o ${GOPATH}/bin/cloc
+  chmod 755 ${GOPATH}/bin/cloc
 }
 
 errorNumber() {
