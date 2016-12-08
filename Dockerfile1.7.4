@@ -14,6 +14,8 @@ RUN go get -u github.com/axw/gocov/gocov
 RUN go get -u github.com/AlekSi/gocov-xml
 RUN go get -u github.com/golang/lint/golint
 RUN go get -u github.com/mitchellh/gox
+# a markdown processor for Go
+RUN go get -u github.com/russross/blackfriday-tool
 
 # install cloc tool
 RUN curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc \

@@ -16,6 +16,7 @@ The docker images includes the following `golang` tools.
 * [x] [golint](https://github.com/golang/lint/golint) This is a linter for Go source code. (Golint requires Go 1.6 or later.)
 * [x] [glide](https://github.com/Masterminds/glide) Package Management for Golang
 * [x] [cloc](https://github.com/AlDanial/cloc) Count Lines of Code.
+* [x] [blackfriday-tool](https://github.com/russross/blackfriday-tool) a markdown processor for Go.
 
 ## Install
 
