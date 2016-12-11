@@ -59,7 +59,6 @@ go_version() {
 }
 
 set_workdir() {
-  test -d $workdir && rm -rf $workdir
   workdir=$1
   test -d $workdir || mkdir -p $workdir
   coverage_report="$workdir/coverage.txt"
