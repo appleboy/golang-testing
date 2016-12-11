@@ -16,6 +16,8 @@ RUN go get -u github.com/golang/lint/golint
 RUN go get -u github.com/mitchellh/gox
 # a markdown processor for Go
 RUN go get -u github.com/russross/blackfriday-tool
+# install govendor tool
+RUN go get -u github.com/kardianos/govendor
 
 # install cloc tool
 RUN curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc \
