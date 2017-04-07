@@ -12,8 +12,8 @@ services:
   - docker
 
 before_install:
-  - mkdir -p $GOPATH/bin
-  - curl https://glide.sh/get | sh
+  - make install
+  - make sync
 
 script:
   - make test

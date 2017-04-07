@@ -5,10 +5,10 @@ export PROJECT_PATH = /go/src/github.com/appleboy/golang-testing
 all:
 
 install:
-	glide install
+	go get -u github.com/kardianos/govendor
 
-update:
-	glide update
+sync:
+	govendor sync
 
 build:
 ifeq ($(tag),)
@@ -27,9 +27,9 @@ docker_test: clean
 		-v $(PWD):$(PROJECT_PATH) \
 		-w=$(PROJECT_PATH) \
 		appleboy/golang-testing \
-		sh -c "make update && coverage all"
+		sh -c "make sync && coverage all"
 
-test: clean update
+test: clean sync
 	sudo cp coverage.sh /usr/local/bin/coverage
 	coverage testing
 
