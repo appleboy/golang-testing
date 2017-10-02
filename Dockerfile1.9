@@ -1,9 +1,12 @@
-FROM golang:1.9-alpine
+FROM golang:1.9.0-alpine
 
-MAINTAINER Bo-Yi Wu <appleboy.tw@gmail.com>
+LABEL maintainer="Bo-Yi Wi <appleboy.tw@gmail.com>"
 
-RUN apk update \
-  && apk add git make curl perl bash build-base && rm -rf /var/cache/apk/*
+RUN sed -i -e 's/v3\.6/edge/g' /etc/apk/repositories
+RUN apk update && \
+  apk upgrade --update-cache --available
+RUN apk add git make curl perl bash build-base upx && \
+  rm -rf /var/cache/apk/*
 
 # install glide package management.
 RUN curl https://glide.sh/get | sh
