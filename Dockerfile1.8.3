@@ -2,11 +2,15 @@ FROM golang:1.8.3-alpine3.6
 
 LABEL maintainer="Bo-Yi Wi <appleboy.tw@gmail.com>"
 
-RUN sed -i -e 's/v3\.6/edge/g' /etc/apk/repositories
 RUN apk update && \
   apk upgrade --update-cache --available
-RUN apk add git make curl perl bash build-base upx && \
-  rm -rf /var/cache/apk/*
+RUN apk add git make curl perl bash build-base zlib-dev ucl-dev
+
+RUN git clone https://github.com/upx/upx.git && cd upx && \
+  git submodule update --init --recursive && \
+  make all && cp -r src/upx.out /usr/local/bin/upx
+
+RUN rm -rf /var/cache/apk/*
 
 # install glide package management.
 RUN curl https://glide.sh/get | sh
