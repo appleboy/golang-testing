@@ -29,6 +29,8 @@ RUN go get -u github.com/kardianos/govendor
 RUN go get -u github.com/campoy/embedmd
 # install misspell tool
 RUN go get -u github.com/client9/misspell/cmd/misspell
+# install node-prune tool
+RUN go get -u github.com/tj/node-prune/cmd/node-prune
 
 # install cloc tool
 RUN curl https://raw.githubusercontent.com/AlDanial/cloc/master/cloc -o /usr/bin/cloc \
